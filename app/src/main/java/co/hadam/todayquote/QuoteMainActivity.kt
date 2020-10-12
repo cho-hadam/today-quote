@@ -20,5 +20,13 @@ class QuoteMainActivity : AppCompatActivity() {
         quotes.add(Quote(1, "명언 내용 1", "출처 1"))
         quotes.add(Quote(2, "명언 내용 2", "출처 2"))
         quotes.add(Quote(3, "명언 내용 3", "출처 3"))
+
+        var randomIndex = Random.nextInt(0, 3)
+        var randomQuote = quotes[randomIndex]
+        // var randomQuote = quotes.get(randomIndex)
+
+        // 뷰 객체를 이용해서 출력
+        quoteText.text = randomQuote.text
+        quoteFrom.text = randomQuote.from
     }
 }
