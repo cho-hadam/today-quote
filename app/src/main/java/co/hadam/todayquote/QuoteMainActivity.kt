@@ -1,15 +1,23 @@
 package co.hadam.todayquote
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import kotlin.random.Random
 
 class QuoteMainActivity : AppCompatActivity() {
     private lateinit var pref: SharedPreferences
+    private lateinit var quotes: List<Quote>
+
+    fun initializeQuotes() {
+        val initialized = pref.getBoolean("initialized", false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +29,32 @@ class QuoteMainActivity : AppCompatActivity() {
 
         // 프리퍼런스 객체 가져오기 (파일 이름은 quotes)
         pref = this.getSharedPreferences("quotes", Context.MODE_PRIVATE)
+
+        // 필요한 기본 명언 초기화
+        initializeQuotes()
+
+        // 20개의 명언 가져오기
+        quotes = Quote.getQuotesFromPreference(pref)
+
+        // 명언이 있다면
+        if(quotes.isNotEmpty()) {
+            val randomIdx = Random.nextInt(quotes.size)
+            val randomQuote = quotes[randomIdx]
+            quoteText.text = randomQuote.text
+            quoteFrom.text = randomQuote.from
+        } else {
+            // 없다면
+            quoteText.text = "저장된 명언이 없습니다."
+            quoteFrom.text = ""
+        }
+
+        val toQuoteListBtn = findViewById<Button>(R.id.quote_list_btn)
+        toQuoteListBtn.setOnClickListener {
+            val intent = Intent(this, QuoteListActivity::class.java)
+            intent.putExtra("quote_size", quotes.size)
+            startActivity(intent)
+        }
+
 
 //        // 수정 가능한 Quote를 저장할 리스트 객체 생성 및 명언 객체 3개 넣어보기
 //        var quotes = mutableListOf<Quote>()
