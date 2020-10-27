@@ -55,6 +55,13 @@ class QuoteMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val toQuoteEditBtn = findViewById<Button>(R.id.quote_edit_btn)
+        toQuoteEditBtn.setOnClickListener {
+            val intent = Intent(this, QuoteEditActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
 //        // 수정 가능한 Quote를 저장할 리스트 객체 생성 및 명언 객체 3개 넣어보기
 //        var quotes = mutableListOf<Quote>()
