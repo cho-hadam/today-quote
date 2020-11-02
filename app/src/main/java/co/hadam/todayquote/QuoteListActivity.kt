@@ -1,5 +1,6 @@
 package co.hadam.todayquote
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -18,6 +19,10 @@ class QuoteListActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.quote_list)
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val pref = this.getSharedPreferences("quotes", Context.MODE_PRIVATE)
+        val quotes = Quote.getQuotesFromPreference(pref)
+        val adapter = QuoteAdapter(quotes)
+        recyclerView.adapter = adapter
 
     }
 }
