@@ -24,6 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="20dp"
         android:text="명언 공유" />
 
     <Button
@@ -31,6 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="20dp"
         android:text="출처 검색" />
 
 </LinearLayout>

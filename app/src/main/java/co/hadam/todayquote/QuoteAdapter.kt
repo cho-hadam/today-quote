@@ -1,5 +1,7 @@
 package co.hadam.todayquote
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +19,34 @@ class QuoteAdapter(val dataList: List<Quote>) :
         val shareBtn = view.findViewById<Button>(R.id.quote_share_btn)
         val fromSearchBtn = view.findViewById<Button>(R.id.quote_from_search_btn)
 
+        init {
+            shareBtn.setOnClickListener {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.putExtra(Intent.EXTRA_TITLE, "힘이 되는 명언")
+                intent.putExtra(Intent.EXTRA_SUBJECT, "힘이 되는 명언")
+                intent.putExtra(Intent.EXTRA_TEXT, "${quote.text}\n 출처 : ${quote.from}")
+                intent.type = "text/plain"
+
+                val chooser = Intent.createChooser(intent, "명언 공유")
+
+                it.context.startActivity(chooser)
+            }
+            fromSearchBtn.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=${quote.from}"))
+
+                it.context.startActivity(intent)
+            }
+        }
+
 
         fun bind(q: Quote) {
             quote = q
             quoteText.text = quote.text
             quoteFrom.text = quote.from
+
+            if (quote.from.isBlank()) {
+                fromSearchBtn.visibility = View.GONE
+            }
         }
     }
 
